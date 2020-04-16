@@ -1,8 +1,44 @@
-import React from 'react';
+import React,{useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import UserInput from './Components/UserInput/UserInput';
+import UserOutput from './Components/UserOutput/UserOutput';
+import UserInputElement from './Components/Assignment2/UserInputElement';
+import ValidationComp from './Components/Assignment2/ValdiationComp';
+import CharComponent from './Components/Assignment2/CharComponent';
 
 function App() {
+  const [userData , setUserData] = useState('Enter data');
+  const [userLength, setLength] = useState(0);
+  const [charArr, setCharArr] = useState([]);
+  const [userInputtedData, setDataForInp] = useState('')
+
+  const changeHandler = (event) => {
+    setUserData(event.target.value)
+  }
+
+  const changeHandlerForInput = (event) => {
+    let obj = event.target.value;
+    setLength(obj.length);
+    setDataForInp(obj);
+    setCharArr(obj.split(''))
+  }
+
+  const removeCharHandler = (event,index) => {
+    const newArr = charArr.slice(0);
+    newArr.splice(index,1);
+    setCharArr(newArr);
+    setLength(newArr.length);
+    setDataForInp(newArr.join(''));
+  }
+
+  const ListGenerate =  charArr.map((characterDisp,index) => {
+                  return <CharComponent  
+                          key={index+characterDisp} 
+                          enteredChar={characterDisp} 
+                          removeCharHandler={(event)=>removeCharHandler(event,index)}/>
+                  })
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +55,24 @@ function App() {
           Learn React
         </a>
       </header>
+      <UserInput 
+      handler = {changeHandler} 
+      initial = {userData}
+      />
+      <UserOutput 
+       userData={userData}
+       />
+       <UserOutput 
+       userData={userData}
+       />
+
+    <UserInputElement 
+      changeHandlerForInput = {changeHandlerForInput}
+      dataLength = {userLength} 
+      userInputtedData = {userInputtedData}
+      />
+      <ValidationComp dataLength = {userLength} />
+       {ListGenerate}
     </div>
   );
 }
