@@ -6,6 +6,7 @@ import UserOutput from './Components/UserOutput/UserOutput';
 import UserInputElement from './Components/Assignment2/UserInputElement';
 import ValidationComp from './Components/Assignment2/ValdiationComp';
 import CharComponent from './Components/Assignment2/CharComponent';
+import Blog from './Components/src/containers/Blog/Blog';
 
 function App() {
   const [userData , setUserData] = useState('Enter data');
@@ -73,6 +74,7 @@ function App() {
       />
       <ValidationComp dataLength = {userLength} />
        {ListGenerate}
+       <Blog />
     </div>
   );
 }
