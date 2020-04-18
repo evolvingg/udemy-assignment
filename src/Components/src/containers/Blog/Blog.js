@@ -11,7 +11,8 @@ class Blog extends Component {
         super(props);
         this.state = {
             posts: [],
-            selectedPostId: null
+            selectedPostId: null,
+            error: false
         }
     }
 
@@ -27,6 +28,9 @@ class Blog extends Component {
             })
             this.setState({posts: updatedPosts})
         })
+        .catch((error) => {
+            this.setState({error: true})
+        })
     }
 
     postSelectorHandlor = (postIndex) => {
@@ -34,10 +38,13 @@ class Blog extends Component {
     }
 
     render () {
-        const post = this.state.posts.map(item => <Post key={item.id} 
-                                                        title={item.title} 
-                                                        author={item.author} 
-                                                        clicked={()=>this.postSelectorHandlor(item.id)}/>);
+        let post = <p style={{color: 'red',textAlign: 'center'}}>Something went wrong</p>;
+        if(!this.state.error) {
+            post = this.state.posts.map(item => <Post key={item.id} 
+                title={item.title} 
+                author={item.author} 
+                clicked={()=>this.postSelectorHandlor(item.id)}/>);
+        }
         return (
             <div>
                 <section className={cssClasses.Posts}>

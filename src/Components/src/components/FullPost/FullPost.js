@@ -9,6 +9,7 @@ class FullPost extends Component {
             fullPost: null
         }
     } 
+
     componentDidUpdate() {
         if(this.props.id) {
             //allow api call when no data initially or when we have fetched data then dont make that call again so that it doesnot go into infinite loop
@@ -22,6 +23,13 @@ class FullPost extends Component {
         }
     }
 
+    deletePostHandler = () => {
+        axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+            .then((response) => {
+                console.log(response);
+            })
+    }
+
     render () {
         let post = <p  style={{textAlign: 'center'}}>Please select a Post!</p>;
         if(this.props.id) {
@@ -33,7 +41,7 @@ class FullPost extends Component {
                     <h1>{this.state.fullPost.title}</h1>
                     <p>{this.state.fullPost.body}</p>
                     <div className={cssClasses.Edit}>
-                        <button className={cssClasses.Delete}>Delete</button>
+                        <button className={cssClasses.Delete} onClick={this.deletePostHandler}>Delete</button>
                     </div>
                 </div>
     
