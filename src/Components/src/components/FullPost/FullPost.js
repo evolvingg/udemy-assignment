@@ -14,7 +14,7 @@ class FullPost extends Component {
         if(this.props.id) {
             //allow api call when no data initially or when we have fetched data then dont make that call again so that it doesnot go into infinite loop
             if(!this.state.fullPost || (this.state.fullPost && this.state.fullPost.id !== this.props.id)) {
-                axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+                axios.get(`/posts/${this.props.id}`)
                 .then((response) => {
                     const post = response.data;
                     this.setState({fullPost: post})
@@ -24,7 +24,7 @@ class FullPost extends Component {
     }
 
     deletePostHandler = () => {
-        axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+        axios.delete(`/posts/${this.props.id}`)
             .then((response) => {
                 console.log(response);
             })
