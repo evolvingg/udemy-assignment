@@ -8,6 +8,8 @@ import ValidationComp from './Components/Assignment2/ValdiationComp';
 import CharComponent from './Components/Assignment2/CharComponent';
 import Blog from './Components/src/containers/Blog/Blog';
 
+import {BrowserRouter} from 'react-router-dom';
+
 function App() {
   const [userData , setUserData] = useState('Enter data');
   const [userLength, setLength] = useState(0);
@@ -22,7 +24,7 @@ function App() {
     let obj = event.target.value;
     setLength(obj.length);
     setDataForInp(obj);
-    setCharArr(obj.split(''))
+    setCharArr(obj.split(''));
   }
 
   const removeCharHandler = (event,index) => {
