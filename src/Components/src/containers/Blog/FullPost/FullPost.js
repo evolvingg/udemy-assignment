@@ -10,14 +10,14 @@ class FullPost extends Component {
         }
     } 
 
-    componentDidUpdate() {
-        if(this.props.id) {
+    componentDidMount() {
+        console.log(this.props);
+        if(this.props.match.params.postId) {
             //allow api call when no data initially or when we have fetched data then dont make that call again so that it doesnot go into infinite loop
-            if(!this.state.fullPost || (this.state.fullPost && this.state.fullPost.id !== this.props.id)) {
-                axios.get(`/posts/${this.props.id}`)
+            if(!this.state.fullPost || (this.state.fullPost && this.state.fullPost.id !== this.props.match.params.postId)) {
+                axios.get(`/posts/${this.props.match.params.postId}`)
                 .then((response) => {
-                    const post = response.data;
-                    this.setState({fullPost: post})
+                    this.setState({fullPost: response.data})
                 })
             }
         }
@@ -44,7 +44,6 @@ class FullPost extends Component {
                         <button className={cssClasses.Delete} onClick={this.deletePostHandler}>Delete</button>
                     </div>
                 </div>
-    
             );
         }
         return post;

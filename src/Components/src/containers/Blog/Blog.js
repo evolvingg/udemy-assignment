@@ -1,69 +1,47 @@
 import React, { Component } from 'react';
 
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
-import cssClasses from './Blog.module.css';
-import axios from '../../../../axios';
+import FullPost from './FullPost/FullPost';
+import NewPost from './NewPost/NewPost';
+import './Blog.css';
+import Posts from './Posts/Posts';
+import {Route, NavLink, Switch} from 'react-router-dom';
+
 
 class Blog extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: [],
-            selectedPostId: null,
-            error: false
-        }
-    }
-
-    componentDidMount() {
-        axios.get(`/posts`)
-        .then(response => {
-            const posts = response.data.slice(8,12);
-            const updatedPosts = posts.map(post => {
-                return {
-                    ...post,
-                    author: 'Max'
-                }
-            })
-            this.setState({posts: updatedPosts})
-        })
-        .catch((error) => {
-            this.setState({error: true})
-        })
-    }
-
-    postSelectorHandlor = (postIndex) => {
-        this.setState({selectedPostId: postIndex})
-    }
 
     render () {
-        let post = <p style={{color: 'red',textAlign: 'center'}}>Something went wrong</p>;
-        if(!this.state.error) {
-            post = this.state.posts.map(item => <Post key={item.id} 
-                title={item.title} 
-                author={item.author} 
-                clicked={()=>this.postSelectorHandlor(item.id)}/>);
-        }
+
         return (
-            <div className={cssClasses.Blog}>
+            <div className="Blog">
                 <header>
                     <nav>
                         <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/new-post">New Post</a></li>
+                            <li><NavLink to = "/" exact>Home</NavLink></li>
+                            <li><NavLink to ={{
+                                    pathname: "/new-post",
+                                    hash: "#submit",
+                                    search: '?quick-search=true'
+                                }}>New Post</NavLink>
+                            </li>
                         </ul>
                     </nav>
                 </header>
-                <section className={cssClasses.Posts}>
-                    {post}
-                </section>
-                <section>
-                    <FullPost id={this.state.selectedPostId}/>
-                </section>
-                <section>
-                    <NewPost />
-                </section>
+                {/* <Route path="/" exact  render={() => <h1>Home</h1>} />
+                <Route path="/"  render={() => <h1>Home2</h1>} /> */}
+
+                {/* 1st routing way to tell 1 should be rendered */}
+                {/* <Route path='/' exact component={Posts} />
+                <Route path='/new-post' exact component={NewPost} />
+                <Route path='/posts/:postId' exact component={FullPost} /> */}
+
+
+                {/* other way of telling react-router to loadd only single component from list of routes is using switch (load 1st one which matches) */}
+                
+                <Route path='/' exact component={Posts} />
+                <Switch>
+                    <Route path='/new-post'  component={NewPost} />
+                    <Route path='/:postId' exact component={FullPost} />
+                </Switch>
             </div>
         );
     }

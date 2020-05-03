@@ -35,14 +35,15 @@ function App() {
     setDataForInp(newArr.join(''));
   }
 
-  const ListGenerate =  charArr.map((characterDisp,index) => {
-                  return <CharComponent  
-                          key={index+characterDisp} 
-                          enteredChar={characterDisp} 
-                          removeCharHandler={(event)=>removeCharHandler(event,index)}/>
-                  })
+  // const ListGenerate =  charArr.map((characterDisp,index) => {
+  //                 return <CharComponent  
+  //                         key={index+characterDisp} 
+  //                         enteredChar={characterDisp} 
+  //                         removeCharHandler={(event)=>removeCharHandler(event,index)}/>
+  //                 })
 
   return (
+    <BrowserRouter>
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -58,7 +59,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <UserInput 
+      {/* <UserInput 
       handler = {changeHandler} 
       initial = {userData}
       />
@@ -74,10 +75,11 @@ function App() {
       dataLength = {userLength} 
       userInputtedData = {userInputtedData}
       />
-      <ValidationComp dataLength = {userLength} />
-       {ListGenerate}
-       <Blog />
-    </div>
+      <ValidationComp dataLength = {userLength} /> */}
+       {/* {ListGenerate} */}
+          <Blog />
+      </div>
+    </BrowserRouter>
   );
 }
 
