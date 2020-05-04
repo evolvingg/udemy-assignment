@@ -34,23 +34,29 @@ class Posts extends React.Component {
     }
 
     postSelectorHandlor = (postIndex) => {
-        this.setState({selectedPostId: postIndex})
+        this.props.history.push(`/${postIndex}`);
+       // this.setState({selectedPostId: postIndex})
     }
 
     render() {
         let post = <p style={{color: 'red',textAlign: 'center'}}>Something went wrong</p>;
+        // if(!this.state.error) {
+        //     post = this.state.posts.map(item =>  <Link to={`/${item.id}`} key={item.id}>
+        //                     <Post
+        //                         title={item.title} 
+        //                         author={item.author} 
+        //                         clicked={()=>this.postSelectorHandlor(item.id)}/>
+        //              </Link>);           
+        //          {/* 1st routing way to tell 1 should be rendered */}
+        //     {/*  <Link to={`/posts/${item.id}`} key={item.id}> */}    
+        // }
         if(!this.state.error) {
-            post = this.state.posts.map(item =>  <Link to={`/${item.id}`} key={item.id}>
-                            <Post
+            post = this.state.posts.map(item =>   <Post key={item.id}
                                 title={item.title} 
                                 author={item.author} 
-                                clicked={()=>this.postSelectorHandlor(item.id)}/>
-                     </Link>);           
+                                clicked={()=>this.postSelectorHandlor(item.id)}/>);           
                  {/* 1st routing way to tell 1 should be rendered */}
-            {/*  <Link to={`/posts/${item.id}`} key={item.id}> */}
-
-            
-            
+            {/*  <Link to={`/posts/${item.id}`} key={item.id}> */}    
         }
         return (
             <section className={cssClasses.Posts}>
